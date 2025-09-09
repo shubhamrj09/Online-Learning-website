@@ -1,0 +1,56 @@
+// Import Supabase from supabase.js
+import { supabase } from "./supabase.js";
+
+// Login Function
+async function login(event) {
+    event.preventDefault(); // Prevent form submission default behavior
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
+
+    if (error) {
+        alert("Login failed: " + error.message);
+        return;
+    }
+
+    alert("Login successful!");
+    localStorage.setItem("user", JSON.stringify(data.user)); // Store user data
+    window.location.href = "dashboard.html"; // Redirect to a protected page
+}
+
+// Logout Function
+async function logout() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        alert("Logout failed: " + error.message);
+        return;
+    }
+
+    alert("Logged out successfully!");
+    localStorage.removeItem("user"); // Remove user data
+    window.location.href = "login.html"; // Redirect to login
+}
+
+// Check if User is Logged In
+async function checkAuth() {
+    const user = localStorage.getItem("user");
+
+    if (user) {
+        document.getElementById("logoutBtn").style.display = "block";
+    } else {
+        document.getElementById("logoutBtn").style.display = "none";
+    }
+}
+
+// Run Auth Check on Page Load
+document.addEventListener("DOMContentLoaded", checkAuth);
+
+// Attach event listeners
+document.querySelector("form").addEventListener("submit", login);
+document.getElementById("logoutBtn").addEventListener("click", logout);

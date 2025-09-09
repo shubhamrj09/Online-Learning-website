@@ -1,0 +1,118 @@
+{% extends 'courses/base.html'%}
+{% load course_custom_tags %}
+{% load static %}
+{% block title %}
+my courses
+{% endblock %}
+{% block content %}
+<head>
+    <style>
+        .section-title {
+          color: #f4b400;
+          text-align: center;
+          font-weight: 600;
+          font-size: 2rem;
+          margin: 30px 0;
+        }
+    
+        .course-card {
+          transition: transform 0.2s, box-shadow 0.3s;
+          border: none;
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+    
+        .course-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+    
+        .course-img {
+          height: 200px;
+          object-fit: cover;
+          border-bottom: 1px solid #eee;
+        }
+    
+        .card-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 0;
+        }
+    
+        .card-footer {
+          background: #fff;
+        }
+    
+        .btn-start {
+          background-color: #f4b400;
+          color: #fff;
+          font-weight: 600;
+          width: 100%;
+          border-radius: 0 0 15px 15px;
+        }
+    
+        .btn-start:hover {
+          background-color: #e3a900;
+          color: #fff;
+        }
+    
+        @media (max-width: 576px) {
+          .course-card {
+            margin-bottom: 20px;
+          }
+        }
+      </style>
+</head>
+<!--
+<body>
+<div class="container">
+    <p class="fw-bold text-orange" style="color: #f4b400; text-align: center; font-weight: 400; font-size:x-large;">Enrolled Courses</p>
+    {{user_courses}}
+<br>
+    <div class="row">
+        {% for uc in user_courses %}
+        <div class="col mx-auto">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img class="card-img-top" src="{{uc.course.thumbnail.url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{uc.course.name}}</h5>
+                </div>
+
+                <div class="card-footer p-0">
+                    <div class="row no-gutters">
+                        <div class="col border-right">
+                            <a href="/course/{{uc.course.slug}}" class="btn btn-light btn-block">Start Course</a>
+                        </div> 
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>-->
+<body>
+    <div class="container">
+      <p class="section-title">Enrolled Courses</p>
+      <div class="row g-4 justify-content-center">
+        {% for uc in user_courses %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card course-card">
+            <img class="card-img-top course-img" src="{{ uc.course.thumbnail.url }}" alt="{{ uc.course.name }}">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ uc.course.name }}</h5>
+            </div>
+            <div class="card-footer p-0">
+              <a href="/course/{{ uc.course.slug }}" class="btn btn-start">Start Course</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+{% endblock %} 
